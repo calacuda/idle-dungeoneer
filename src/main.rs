@@ -1,3 +1,5 @@
+// #![recursion_limit = "512"]
+
 use dioxus::prelude::*;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");

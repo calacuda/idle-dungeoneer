@@ -3,9 +3,6 @@ session-name := "idle-dungeon"
 _:
   @just -l
 
-gh_watch:
-  zsh -c 'gh run watch -i 1 --exit-status && echo "RUN SUCCESFUL" || gh run view --log-failed'
-
 _new-window NAME CMD:
   tmux new-w -t "={{session-name}}" -n "{{NAME}}"
   [[ "{{CMD}}" != "" ]] && tmux send-keys -t "{{session-name}}:{{NAME}}" "{{CMD}}" ENTER || true
@@ -23,5 +20,11 @@ tmux:
   tmux has-session -t "={{session-name}}" || just _new-tmux
   tmux a -t "={{session-name}}"
 
+gh_watch:
+  zsh -c 'gh run watch -i 1 --exit-status && echo "RUN SUCCESFUL" || gh run view --log-failed'
+
 serve:
-  WEBKIT_DISABLE_COMPOSITING_MODE=1 /usr/bin/dx serve --platform desktop
+  WEBKIT_DISABLE_COMPOSITING_MODE=1 /usr/bin/dx serve --platform desktop --hot-patch
+
+check:
+  /usr/bin/dx check --platform desktop
