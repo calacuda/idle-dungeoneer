@@ -15,6 +15,7 @@ _new-tmux:
   @just _new-window "Serve" "just serve"
   @just _new-window "Git" "git status"
   @just _new-window "Misc" ""
+  @just _new-window "QoT" "cd ../quest-of-township/"
 
 tmux:
   tmux has-session -t "={{session-name}}" || just _new-tmux
@@ -24,7 +25,7 @@ gh_watch:
   zsh -c 'gh run watch -i 1 --exit-status && echo "RUN SUCCESFUL" || gh run view --log-failed'
 
 serve:
-  WEBKIT_DISABLE_COMPOSITING_MODE=1 /usr/bin/dx serve --platform desktop --hot-patch
+  WEBKIT_DISABLE_COMPOSITING_MODE=1 /usr/bin/dx serve --platform desktop --hot-reload true --hot-patch
 
 check:
   /usr/bin/dx check --platform desktop

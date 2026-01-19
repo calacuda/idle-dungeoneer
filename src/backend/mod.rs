@@ -22,7 +22,7 @@ impl Display for FPS {
 
 impl Default for CubeTranslationSpeed {
     fn default() -> Self {
-        Self(1.0)
+        Self(0.0)
     }
 }
 
@@ -43,6 +43,6 @@ impl Display for CubeRotationSpeed {
 
 impl Default for CubeRotationSpeed {
     fn default() -> Self {
-        Self(2.0)
+        Self(0.5)
     }
 }
