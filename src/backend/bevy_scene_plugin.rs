@@ -29,8 +29,9 @@ impl Plugin for BevyScenePlugin {
         app.insert_resource(CubeTranslationSpeed::default());
         app.insert_resource(FPS(0.0));
         app.insert_resource(CubeRotationSpeed::default());
-        app.add_systems(Startup, setup);
-        app.add_systems(Update, (sync_with_ui, animate, orbit_camera_system));
+        // app.add_systems(Startup, setup);
+        // app.add_systems(Update, (sync_with_ui, animate, orbit_camera_system));
+        app.add_systems(Update, sync_with_ui);
     }
 }
 

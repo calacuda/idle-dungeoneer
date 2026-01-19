@@ -7,7 +7,10 @@ use bevy::{
 };
 use bevy_dioxus_sync::{panels::DioxusPanel, plugins::DioxusPlugin};
 
-use crate::{backend::bevy_scene_plugin::BevyScenePlugin, frontend::AppUi};
+use crate::{
+    backend::{bevy_scene_plugin::BevyScenePlugin, sphere::SpherePlugin},
+    frontend::AppUi,
+};
 
 pub mod backend;
 pub mod frontend;
@@ -34,5 +37,6 @@ pub fn main() {
             main_window_ui: Some(DioxusPanel::new(AppUi {})),
         })
         .add_plugins(BevyScenePlugin)
+        .add_plugins(SpherePlugin)
         .run();
 }

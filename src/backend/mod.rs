@@ -1,4 +1,5 @@
 pub mod bevy_scene_plugin;
+pub mod sphere;
 
 use std::fmt::Display;
 
