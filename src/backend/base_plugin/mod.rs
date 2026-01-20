@@ -5,7 +5,7 @@ use bevy::{input::keyboard::KeyboardInput, prelude::*, window::WindowFocused};
 use crate::backend::{CurrentIdleTimeSeconds, LongestIdleTimeSeconds};
 
 pub const TIME_WINDOW: f64 = 0.25;
-pub const IDLE_TIME_GROWTH_RATE: f64 = 1.125;
+pub const IDLE_TIME_GROWTH_RATE: f64 = 1.75;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default, States)]
 pub enum MainGameStates {
