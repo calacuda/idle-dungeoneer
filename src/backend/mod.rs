@@ -1,16 +1,17 @@
-pub mod bevy_scene_plugin;
-pub mod sphere;
-
 use std::fmt::Display;
 
 use bevy::ecs::prelude::*;
 use bevy::prelude::{Deref, DerefMut};
 
-#[derive(Component, Clone)]
-pub struct DynamicCube;
+pub mod base_plugin;
+pub mod bevy_scene_plugin;
+pub mod sphere;
 
-#[derive(Resource, Clone, Debug, Deref, DerefMut)]
-pub struct CubeTranslationSpeed(pub f32);
+#[derive(Resource, Debug, Clone, PartialEq, Deref, DerefMut)]
+pub struct CurrentIdleTimeSeconds(pub f64);
+
+#[derive(Resource, Debug, Clone, PartialEq, Deref, DerefMut)]
+pub struct LongestIdleTimeSeconds(pub f64);
 
 #[derive(Resource, Debug, Clone)]
 pub struct FPS(pub f32);
@@ -21,29 +22,17 @@ impl Display for FPS {
     }
 }
 
-impl Default for CubeTranslationSpeed {
-    fn default() -> Self {
-        Self(0.0)
-    }
-}
-
-impl Display for CubeTranslationSpeed {
+impl Display for CurrentIdleTimeSeconds {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+        write!(f, "{} sec", self.0)
     }
 }
 
-#[derive(Resource, Clone, Debug, Deref, DerefMut)]
-pub struct CubeRotationSpeed(pub f32);
-
-impl Display for CubeRotationSpeed {
+impl Display for LongestIdleTimeSeconds {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+        write!(f, "{} sec", self.0)
     }
 }
 
-impl Default for CubeRotationSpeed {
-    fn default() -> Self {
-        Self(0.5)
-    }
-}
+#[derive(Component, Debug, Clone, Deref, DerefMut)]
+pub struct TestComponent(pub usize);

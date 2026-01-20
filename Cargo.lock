@@ -364,6 +364,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "arc-swap"
+version = "1.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "51d03449bb8ca2cc2ef70869af31463d1ae5ccc8fa3e334b307203fbf815207e"
+dependencies = [
+ "rustversion",
+]
+
+[[package]]
 name = "arrayref"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1141,8 +1150,9 @@ dependencies = [
 [[package]]
 name = "bevy_dioxus_hooks"
 version = "0.1.0"
-source = "git+https://github.com/rydb/bevy_dioxus_sync#653724f82fb535f9abd73822e30d102858754e08"
+source = "git+https://github.com/rydb/bevy_dioxus_sync?branch=crossdom_signal#3a2497aec4664a5ec2e25372a20b420a5ee840c1"
 dependencies = [
+ "arc-swap",
  "async-std",
  "bevy_app",
  "bevy_asset",
@@ -1163,22 +1173,25 @@ dependencies = [
 [[package]]
 name = "bevy_dioxus_interop"
 version = "0.1.0"
-source = "git+https://github.com/rydb/bevy_dioxus_sync#653724f82fb535f9abd73822e30d102858754e08"
+source = "git+https://github.com/rydb/bevy_dioxus_sync?branch=crossdom_signal#3a2497aec4664a5ec2e25372a20b420a5ee840c1"
 dependencies = [
+ "arc-swap",
  "bevy_app",
  "bevy_ecs",
  "bevy_log",
  "bytemuck",
  "crossbeam-channel",
+ "dioxus-core",
  "dioxus-native-dom",
  "dioxus-signals",
+ "generational-box",
  "tokio",
 ]
 
 [[package]]
 name = "bevy_dioxus_messages"
 version = "0.1.0"
-source = "git+https://github.com/rydb/bevy_dioxus_sync#653724f82fb535f9abd73822e30d102858754e08"
+source = "git+https://github.com/rydb/bevy_dioxus_sync?branch=crossdom_signal#3a2497aec4664a5ec2e25372a20b420a5ee840c1"
 dependencies = [
  "bevy_app",
  "bevy_asset",
@@ -1202,7 +1215,7 @@ dependencies = [
 [[package]]
 name = "bevy_dioxus_render"
 version = "0.1.0"
-source = "git+https://github.com/rydb/bevy_dioxus_sync#653724f82fb535f9abd73822e30d102858754e08"
+source = "git+https://github.com/rydb/bevy_dioxus_sync?branch=crossdom_signal#3a2497aec4664a5ec2e25372a20b420a5ee840c1"
 dependencies = [
  "anyrender_vello",
  "bevy_app",
@@ -1236,7 +1249,7 @@ dependencies = [
 [[package]]
 name = "bevy_dioxus_sync"
 version = "0.1.0"
-source = "git+https://github.com/rydb/bevy_dioxus_sync#653724f82fb535f9abd73822e30d102858754e08"
+source = "git+https://github.com/rydb/bevy_dioxus_sync?branch=crossdom_signal#3a2497aec4664a5ec2e25372a20b420a5ee840c1"
 dependencies = [
  "async-std",
  "bevy_app",
@@ -4217,9 +4230,9 @@ checksum = "dea2df4cf52843e0452895c455a1a2cfbb842a1e7329671acf418fdc53ed4c59"
 
 [[package]]
 name = "euclid"
-version = "0.22.11"
+version = "0.22.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad9cdb4b747e485a12abb0e6566612956c7a1bafa3bdb8d682c5b6d403589e48"
+checksum = "df61bf483e837f88d5c2291dcf55c67be7e676b3a51acc48db3a7b163b91ed63"
 dependencies = [
  "num-traits",
  "serde",
@@ -5667,12 +5680,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
 
 [[package]]
-name = "idle-dungeoneering"
+name = "idle-dungeoneer"
 version = "0.1.0"
 dependencies = [
  "bevy",
  "bevy_common_assets",
  "bevy_dioxus_hooks",
+ "bevy_dioxus_interop",
  "bevy_dioxus_sync",
  "dioxus",
  "dioxus-logger",

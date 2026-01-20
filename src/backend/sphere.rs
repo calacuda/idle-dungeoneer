@@ -4,10 +4,7 @@ use bevy::{
 };
 use noise::{NoiseFn, Perlin};
 use rand::Rng;
-use std::{
-    f32::consts::{PI, TAU},
-    ops::Deref,
-};
+use std::f32::consts::{PI, TAU};
 
 #[derive(Clone, Copy, Debug, Resource)]
 pub struct PerlinWrapper(Perlin);
@@ -53,15 +50,15 @@ impl Plugin for SpherePlugin {
                 }
                 .into(),
             })
-            .insert_resource(ClearColor(
-                Srgba {
-                    red: (30. / 255.),
-                    green: (30. / 255.),
-                    blue: (46. / 255.),
-                    alpha: 1.0,
-                }
-                .into(),
-            ))
+            // .insert_resource(ClearColor(
+            //     Srgba {
+            //         red: (30. / 255.),
+            //         green: (30. / 255.),
+            //         blue: (46. / 255.),
+            //         alpha: 1.0,
+            //     }
+            //     .into(),
+            // ))
             .add_systems(Startup, (gen_perlin, add_sphere, camera_setup, timer_setup))
             .add_systems(Update, (undulate_sphere, rotate_sphere));
     }
