@@ -22,21 +22,17 @@ pub struct AppUi {
 
 impl DioxusElementMarker for AppUi {
     fn element(&self) -> Element {
-        // app_ui()
         game_ui(self.idle_time.clone(), self.automation_speed.clone())
     }
 }
 
-// #[component]
 pub fn game_ui(
     idle_time: Receiver<IdleTimeSample>,
     speed_samples: Receiver<AutomationSpeedSample>,
 ) -> Element {
     let idle_time_res = use_bevy_resource::<CurrentIdleTimeSeconds>();
     let best_idle_time_res = use_bevy_resource::<LongestIdleTimeSeconds>();
-    // let automation_speed_res = use_bevy_resource::<AutomationSpeed>();
     let window_size = use_bevy_resource::<WResolution>();
-    // let test_component = use_bevy_query::<(Entity, &TestComponent), ()>();
     let mut max_idle_time: Signal<f32> = use_signal(|| 0.0);
     let mut idle_times: Signal<Vec<_>> =
         use_signal(|| vec![IdleTimeSample::new(0.0), IdleTimeSample::new(0.0)]);
@@ -88,51 +84,6 @@ pub fn game_ui(
         }
     });
 
-    // use_effect({
-    //     // let idle_time_res = idle_time_res.clone();
-    //
-    //     move || {
-    //         idle_times.write().push(IdleTimeSample::new(
-    //             idle_time_res
-    //                 // .get()
-    //                 .read()
-    //                 .deref()
-    //                 .read_value()
-    //                 .map(|time| time.0)
-    //                 .unwrap_or(0.0),
-    //         ));
-    //         idle_times
-    //             .write()
-    //             .retain(|time| time.when.elapsed() < IDLE_SAMPLE_WINDOW);
-    //     }
-    // });
-
-    // use_effect(move || {
-    //     let new_value = automation_speed_res
-    //         // .get()
-    //         .read()
-    //         .deref()
-    //         .read_value()
-    //         .map(|speed| speed.0 as f32)
-    //         .unwrap_or(0.0);
-    //
-    //     automation_speed_samples.write().push(new_value);
-    //
-    //     // get just the end
-    //     let n_samples = 60 * 2;
-    //
-    //     if automation_speed_samples.read().len() > n_samples {
-    //         let samples = automation_speed_samples.read().clone();
-    //         *automation_speed_samples.write() = samples[{ samples.len() - n_samples }..].to_vec();
-    //     }
-    //
-    //     *heighest_automation_speed.write() = *automation_speed_samples
-    //         .read()
-    //         .iter()
-    //         .max_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Less))
-    //         .unwrap_or(&0.0);
-    // });
-
     rsx! {
         document::Stylesheet { href: asset!("src/frontend/ui.css") }
 
@@ -167,25 +118,46 @@ pub fn game_ui(
                     style: "
                     width: 50%;
                     height: 100%;
-                    "
+                    ",
 
                     // TODO: battle skill order.
+                    div {
+                        style: "
+                        display: flex;
+                        flex-direction: row;
+                        ",
+
+                        // TODO: battle skill 1
+                        // for battle_skill in battle_skills[1..] {
+                        // make seperator div,
+                        // make battle skill i
+                        // }
+
+                    }
+
                     // TODO: known battle skills.
+                    div {
+                        style: "
+                        display: grid;
+                        grid-template-columns: auto,
+                        grid-template-rows: auto,
+                        gap: 2rem,
+                        ",
+
+                        // TODO:
+                        // for battle_skill in known_battle_skills {
+                        // make battle skill i (grayed out if in order)
+                        // }
+
+                    }
                 }
 
-
-                // TODO: speed graph.
+                // automation speed graph.
                 automation_speed_graph { speed_samples: automation_speed_samples, window_size: window_size }
 
                 // idle speed graph
                 idle_time_graph {
                     heighest: max_idle_time,
-                    // heighest: best_idle_time_res
-                    //     .read()
-                    //     .deref()
-                    //     .read_value()
-                    //     .map(|time| time.0 as f32)
-                    //     .unwrap_or(0.0),
                     time_samples: idle_times,
                     window_size: window_size,
                 }
@@ -194,13 +166,8 @@ pub fn game_ui(
     }
 }
 
-// TODO: make timeing more consistent by:
-// mk a bevy system that every quarter/half second send measeaurments over a crossbeam channel.
-// this system reads them & displays them. this should increase consistency in the timings of the
-// measearments.
 #[component]
 fn automation_speed_graph(
-    // heighest: ReadSignal<f32>,
     speed_samples: ReadSignal<Vec<AutomationSpeedSample>>,
     window_size: Signal<BevyValue<WResolution, TypeId, ()>, SyncStorage>,
 ) -> Element {
@@ -232,8 +199,6 @@ fn automation_speed_graph(
                 viewbox_width: {
                     window_size.read().read_value().map(|size| size.w as i32).unwrap_or(1920) / 4
                 },
-                // viewbox_width: (window_size.w as i32) / 4,
-                // viewbox_height: 1080 / 8,
                 viewbox_height: {
                     window_size.read().read_value().map(|size| size.h as i32).unwrap_or(1080) / 8
                 },
@@ -248,12 +213,10 @@ fn automation_speed_graph(
                 show_dots: false,
                 show_lines: true,
                 lowest: Some(0.0),
-                // highest: Some(heighest.read().deref().to_owned()),
                 highest: series().iter().max_by(|a, b| a.total_cmp(&b).then(std::cmp::Ordering::Less)).map(|f| *f),
                 label_interpolation: (|_v| "".into()) as fn(f32) -> String,
                 series: vec![
                     series(),
-                    // speed_samples(),
                 ],
                 labels: Some((0..speed_samples.len()).map(|_i| "".into()).collect()),
             }
@@ -292,7 +255,6 @@ fn idle_time_graph(
                 viewbox_width: {
                     window_size.read().read_value().map(|size| size.w as i32).unwrap_or(1920) / 4
                 },
-                // viewbox_height: 1080 / 8,
                 viewbox_height: {
                     window_size.read().read_value().map(|size| size.h as i32).unwrap_or(1080) / 8
                 },
@@ -308,7 +270,6 @@ fn idle_time_graph(
                 show_lines: true,
                 lowest: Some(0.0),
                 highest: Some(heighest.read().deref().to_owned()),
-                // highest: Some(25.0),
                 label_interpolation: (|_v| "".into()) as fn(f32) -> String,
                 series: vec![
                     series(),
