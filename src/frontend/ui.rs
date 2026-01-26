@@ -88,8 +88,6 @@ pub fn game_ui(
         document::Stylesheet { href: asset!("src/frontend/ui.css") }
 
         main {
-            // progress_bar { curent_time: idle_time_res.get().map(|time| time.0).unwrap_or(0.0), longest_time: best_idle_time_res.get().map(|time| time.0).unwrap_or(0.0) }
-            // progress_bar { curent_time: idle_time_res.get().map(|time| time.0 as f32).unwrap_or(0.0), longest_time: max_idle_time }
             progress_bar {
                 curent_time: idle_time_res
                     .read()
@@ -108,7 +106,7 @@ pub fn game_ui(
             div {
                 style: "
                 width: 100%;
-                height: 12.5%;
+                height: 20%;
                 display: flex;
                 flex-direction: row;
                 ",
@@ -200,14 +198,14 @@ fn automation_speed_graph(
                     window_size.read().read_value().map(|size| size.w as i32).unwrap_or(1920) / 4
                 },
                 viewbox_height: {
-                    window_size.read().read_value().map(|size| size.h as i32).unwrap_or(1080) / 8
+                    window_size.read().read_value().map(|size| size.h as i32).unwrap_or(1080) / 5
                 },
                 padding_top: 0,
                 padding_left: 0,
                 padding_right: 0,
                 padding_bottom: 0,
-                show_grid_ticks: false,
-                show_dotted_grid: true,
+                show_grid_ticks: true,
+                show_dotted_grid: false,
                 show_labels: true,
                 show_line_labels: false,
                 show_dots: false,
@@ -256,14 +254,14 @@ fn idle_time_graph(
                     window_size.read().read_value().map(|size| size.w as i32).unwrap_or(1920) / 4
                 },
                 viewbox_height: {
-                    window_size.read().read_value().map(|size| size.h as i32).unwrap_or(1080) / 8
+                    window_size.read().read_value().map(|size| size.h as i32).unwrap_or(1080) / 5
                 },
                 padding_top: 0,
                 padding_left: 0,
                 padding_right: 0,
                 padding_bottom: 0,
-                show_grid_ticks: false,
-                show_dotted_grid: true,
+                show_grid_ticks: true,
+                show_dotted_grid: false,
                 show_labels: true,
                 show_line_labels: false,
                 show_dots: false,

@@ -6,7 +6,7 @@ use bevy::{
     time::common_conditions::on_timer,
     window::{WindowFocused, WindowResized},
 };
-use crossbeam::channel::{Receiver, Sender};
+use crossbeam::channel::Sender;
 
 use crate::backend::{
     AutomationSpeed, CurrentIdleTimeSeconds, LongestIdleTimeSeconds, base_plugin::AutomationStates,

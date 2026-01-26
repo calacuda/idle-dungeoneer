@@ -43,6 +43,3 @@ impl Display for AutomationSpeed {
         write!(f, "{:.2} Hz", self.0)
     }
 }
-
-// #[derive(Component, Debug, Clone, Deref, DerefMut)]
-// pub struct TestComponent(pub usize);
