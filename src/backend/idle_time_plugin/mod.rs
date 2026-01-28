@@ -230,9 +230,9 @@ fn step_idle_time(
 
 fn step_automation_speed(key_count: Res<KeyCount>, mut automation_speed: ResMut<AutomationSpeed>) {
     if key_count.0 > 0 {
-        let increment_amount = key_count.0 as f64 / TIME_WINDOW * AUTOMATION_SPEED_GROWTH_RATE;
+        let speed = key_count.0 as f64 / TIME_WINDOW * AUTOMATION_SPEED_GROWTH_RATE;
 
-        automation_speed.0 = increment_amount;
+        automation_speed.step_by(speed);
 
         // info!("automation_speed: {}", **automation_speed);
     }

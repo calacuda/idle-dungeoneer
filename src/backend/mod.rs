@@ -15,7 +15,11 @@ pub struct CurrentIdleTimeSeconds(pub f64);
 pub struct LongestIdleTimeSeconds(pub f64);
 
 #[derive(Resource, Default, Debug, Clone, PartialEq, Deref, DerefMut)]
-pub struct AutomationSpeed(pub f64);
+pub struct AutomationSpeed {
+    #[deref]
+    pub speed: f64,
+    pub raw_speed: f64,
+}
 
 #[derive(Resource, Debug, Clone, Copy, PartialEq, PartialOrd)]
 pub struct FPS(pub f32);
@@ -40,6 +44,16 @@ impl Display for LongestIdleTimeSeconds {
 
 impl Display for AutomationSpeed {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:.2} Hz", self.0)
+        write!(f, "{:.2} Hz", self.speed)
+    }
+}
+
+impl AutomationSpeed {
+    pub fn step_by(&mut self, value: f64) {
+        if value > self.raw_speed {
+            self.speed = value
+        }
+
+        self.raw_speed = value;
     }
 }
